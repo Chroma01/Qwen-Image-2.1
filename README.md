@@ -497,6 +497,14 @@ Prebuilt images and weights for 8 chip platforms are released under [FlagRelease
 
 This repository is licensed under the [Qwen Research License Agreement](./LICENSE).
 
+## Feedback
+
+Having issues with Qwen-Image-2.1?
+Our official feedback form connects you directly with the Qwen Image research team.
+Share your prompts, images, or workflows to help us investigate and improve.
+
+[**Submit Feedback →**](https://alidocs.dingtalk.com/notable/share/form/v01WgZOZA5DaVQPeqLX_dv19yqvsgs3oebp3pcjys_1qX0QQ0?source=link)
+
 ## Contact and Join Us
 
 If you'd like to get in touch with our research team, join our [Discord](https://discord.gg/z3GAxXZ9Ce). We welcome issues and pull requests on GitHub.
