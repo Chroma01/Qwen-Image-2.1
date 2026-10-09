@@ -27,12 +27,20 @@ Four key improvements define this release:
 
 ## News
 
+- 2026.10.09: We released **[Qwen-Image-2.1-Turbo](https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo)** for image generation and editing in just **8 denoising steps**. Get started with the [Turbo example](#qwen-image-21-turbo-8-step-generation-and-editing) below.
+- 2026.10.09: **Qwen-Image-2.1 Pro and Turbo APIs are now officially live!** Explore the [Pro API](https://modelstudio.console.alibabacloud.com/ap-southeast-1/model/market/detail/qwen-image-2.1-pro?serviceSite=international&ref=list) on Alibaba Cloud Model Studio.
 - 2026.09.20: We released Qwen-Image-2.1! Check our [Blog](https://qwen.ai/blog?id=qwen-image-2.1) for more details. Weights available at [HuggingFace](https://huggingface.co/Qwen/Qwen-Image-2.1) and [ModelScope](https://modelscope.cn/models/Qwen/Qwen-Image-2.1).
 - 2026.09.20: [Diffusers](https://github.com/huggingface/diffusers) supports Qwen-Image-2.1 from Day 0 via `QwenImage21Pipeline`. See [PR #14804](https://github.com/huggingface/diffusers/pull/14804).
 - 2026.09.20: [ComfyUI](https://github.com/Comfy-Org/ComfyUI) natively supports Qwen-Image-2.1 from Day 0. Compatible weights at [Comfy-Org/Qwen-Image-2.1](https://huggingface.co/Comfy-Org/Qwen-Image-2.1), with example workflows for [text-to-image](https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_qwen_image_2_1_t2i.json) and [image editing](https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_qwen_image_2_1_image_edit.json).
 - 2026.09.20: [vLLM-Omni](https://github.com/vllm-project/vllm-omni) supports high-performance Qwen-Image-2.1 inference from Day 0, with step-wise execution, prefix KV caching, CUDA Graph decode, FP8 quantization, and TP/Ulysses parallelism.
 - 2026.09.20: [SGLang](https://github.com/sgl-project/sglang) provides Day-0 native support for Qwen-Image-2.1, including prefix caching, Cache-DiT, CUDA graphs, TP/Ulysses/Ring/CFG parallelism, and component offload. See [PR #39983](https://github.com/sgl-project/sglang/pull/39983).
 - 2026.09.20: [LightX2V](https://github.com/ModelTC/LightX2V) delivers Day 0 acceleration for Qwen-Image-2.1! Check out the [usage guide](https://github.com/ModelTC/LightX2V/tree/main/scripts/qwen_image_21) for more details.
+
+## Hosted APIs
+
+**Qwen-Image-2.1 Pro and Turbo APIs are officially available** for image generation and editing in your applications. Use the hosted APIs, or run the [Turbo checkpoint](https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo) in your own environment with Diffusers.
+
+Visit the [Qwen-Image-2.1 Pro API page](https://modelstudio.console.alibabacloud.com/ap-southeast-1/model/market/detail/qwen-image-2.1-pro?serviceSite=international&ref=list) for access and usage details.
 
 ## Quick Start
 
@@ -46,6 +54,55 @@ pip install accelerate
 pip install pillow
 ```
 
+### Qwen-Image-2.1-Turbo: 8-Step Generation and Editing
+
+Turbo uses the same 7B visual generation architecture as Qwen-Image-2.1 and supports text-to-image generation and image editing with **8 denoising steps**. The checkpoint includes its recommended sampling schedule, which Diffusers loads automatically.
+
+Use the latest Diffusers source installed above, which includes support for pipeline-configured sampling sigmas.
+
+```python
+import torch
+from diffusers.utils import load_image
+from diffusers import QwenImage21Pipeline
+
+pipe = QwenImage21Pipeline.from_pretrained(
+    "Qwen/Qwen-Image-2.1-Turbo", dtype=torch.bfloat16
+).to("cuda")
+
+prompt = "The image shows an open illustrated cookbook or recipe journal spread about sushi, rendered in a warm handmade watercolor style on cream, parchment-like paper with visible grain, soft beige aging, subtle stains, and faint ruled notebook lines. A narrow vertical fold divides the two pages at the center, with gentle shadows suggesting a physical open book. At the very top-left edge, a strip of torn blue washi-style tape with white wavy sea motifs overlaps the page border. Nearby, a small coral-orange fish sticker with dark outline, black dot eyes, fins, tail, and scales floats decoratively above the headline, surrounded by small blue outline bubbles and splash droplets. The left page is headed by the large handwritten title \"Sushi Roll\" in bold coral-red script, centered near the top and emphasized by a long wavy blue underline. A small orange starfish illustration with darker spots and black outline sits near the upper-right end of the title area, with additional blue bubbles scattered around the margins. Below the title, the ingredients are arranged like labeled illustrations in a loose grid. In the upper-left ingredient group, a wooden bowl filled with glossy white grains of sushi rice is drawn from a slightly elevated angle, with individual rice kernels shaded in pale cream and gray; its dark ink handwritten caption reads \"Sushi Rice\" and \"2 cups\". To its right, several overlapping rectangular dark green-black nori seaweed sheets with wrinkled matte texture are stacked diagonally; the label beneath reads \"Nori Sheets\" and \"4 sheets\". In the middle-left, a bright orange salmon fillet with white marbling lines lies horizontally on a pale shadow wash; the caption reads \"Fresh Salmon\" and \"200g\". In the middle-right, a whole cucumber with speckled dark-to-light green skin, small bumps, and a short stem stands upright; the label underneath reads \"Cucumber\" and \"1 whole\". In the lower-left-middle, a halved avocado with green flesh, darker peel, and a brown pit is shown front-facing; its caption reads \"Avocado\" and \"1 whole\". In the lower-right-middle, a shallow beige ceramic bowl holds tan sesame seeds in a granular mound; the text below reads \"Sesame Seeds\" and \"2 tbsp\". Along the bottom-left of the ingredients section, a small glass bottle of soy sauce with dark reddish-brown liquid, transparent reflections, and a cork stopper is tilted slightly; its caption reads \"Soy Sauce\" and \"50 ml\". Along the bottom-center/right, a metallic squeeze tube of wasabi is angled diagonally with beige-green paste emerging from the nozzle; the label reads \"Wasabi\" and \"1 tube\". Blue bubble outlines, small star doodles, and tiny blue brush marks decorate the blank spaces around these ingredients without forming any extra readable text. On the right page, the top-right corner has a torn strip of blue patterned washi tape with white wavy lines, placed partly over the page edge. Beneath it, the step-by-step recipe is laid out as a vertical flowchart made of rounded rectangular panels connected by small curved blue arrows pointing downward. Each panel has a thin hand-drawn colored outline, either muted blue or coral-pink, rounded corners, and a small numbered circular badge in blue outline at the left of the text area. The first panel near the top contains a small wooden bowl of rice being mixed with a pale wooden rice paddle; its blue circled number reads \"1\", the heading reads \"Step 1\" and \"Cook Seasoned Rice\", and the instruction text reads \"Mix rice vinegar,\" followed by \"sugar, and salt\" and \"into warm rice\". A dotted curved arrow leads downward to the second panel, which includes a pair of human hands with light peach skin tones placing a dark nori sheet onto a bamboo rolling mat; the hands are shown in close-up with slender fingers, neatly manicured pale nails, and a calm working posture. The second step’s blue circled number reads \"2\", the heading reads \"Step 2\" and \"Lay Nori on Mat\", and the instruction reads \"Place shiny side down\" and \"on the bamboo mat\". The third panel shows close-up hands spreading sticky white rice evenly across a dark nori surface on a bamboo mat, with the rice forming a rounded layer and leaving space near the far edge; its number reads \"3\", the heading reads \"Step 3\" and \"Step 3 Spread Rice Evenly\", and the instruction reads \"Leave a 1-inch border\" and \"at the top edge\". The fourth panel shows strips of filling arranged in parallel inside an open roll: orange salmon, green cucumber, and pale avocado sit on rice atop dark nori on the bamboo mat; the hands are partially visible at the sides adjusting the fillings. Its number reads \"4\", the heading reads \"Step 4\" and \"Place Fillings\", and the instruction reads \"Add salmon, cucumber,\" then \"and avocado strips\" and \"in the center\". The fifth panel depicts the rolled sushi being tightly formed with a bamboo mat wrapped around it while hands press gently from the sides; its number reads \"5\", the heading reads \"Step 5\" and \"Roll Tightly\", and the instruction reads \"Lift the mat and roll\" and \"forward, pressing gently\". The sixth panel shows a chef’s knife slicing cooked sushi rolls on a cutting board, with one completed outside-in roll showing orange salmon, cucumber, avocado, white rice, and dark seaweed layers; the adult hand holding the knife has light skin and trimmed nails, while the blade is long, silver-gray, and angled diagonally across the panel. Its number reads \"6\", the heading reads \"Step 6\" and \"Cut with Wet Knife\", and the instruction reads \"Wipe blade with a\" and \"wet cloth between cuts\". The seventh panel at the lower-right displays the finished plate of sushi rolls: several cut rolls topped with roe, sesame seeds, salmon, and garnishes sit on a pale dish, with folded pickled ginger slices and shredded green garnish nearby. Its number reads \"7\", the heading reads \"Step 7\" and \"Plate Beautifully\", and the instruction reads \"Arrange on a dish\" and \"with pickled ginger\". A small coral-orange fish sticker appears near the lower-left side of the right page, echoing the fish sticker on the left page. Near the bottom-right of the right page, a large red square seal-style stamp with rough ink texture contains the Japanese characters \"手作り\", reinforcing the handmade theme. Throughout both pages, the typography combines casual handwritten dark gray captions with coral-red calligraphic titles and headings, while the borders, arrows, bubbles, tape, starfish, and fish stickers use a coordinated palette of deep ocean blue, cream, wood brown, green, orange, and coral. The overall composition is a friendly instructional cooking diagram designed like a scrapbook page, balancing detailed food illustrations with decorative seaside-themed stationery elements."
+
+image = pipe(
+    prompt=prompt,
+    width=2048,
+    height=2048,
+    use_kv_cache=True,
+    generator=torch.Generator("cpu").manual_seed(42),
+).images[0]
+
+image.save("turbo_t2i.png")
+
+input_image = load_image(
+    'https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo/resolve/main/assets/turbo-boat-input.png'
+).convert("RGBA")
+
+edit_prompt = "Create a photorealistic photograph of the motor yacht from the input sketch, sailing on open sea, captured in full side profile with the camera at water level. Build the vessel with the structure shown in the input sketch: a long low hull; one tall mast stepped forward with a small cross-tree platform near its top; a wheelhouse superstructure with an open bridge wing just behind the mast; a midships deckhouse carrying a row of four rectangular windows with a lifeboat stowed on its roof; a rectangular funnel behind that deckhouse; an aft deckhouse with a row of three rectangular windows and a second lifeboat above it; thin railings along every deck edge; the hull side pierced by one small square window at the bow, an upper line of five round portholes on the raised forward section, and a lower line of nine round portholes along the main hull. Paint the hull black, the superstructures and the mast white, and the funnel yellow. Set the yacht broadside on a calm deep-blue sea with a low gentle swell and a thin white wake trailing from the bow, the straight horizon crossing behind the funnel top, under a clear sky with soft scattered clouds; sunlight from the front left lights the white superstructures and leaves a bright reflection path on the water beside the hull with a soft contact shadow along the waterline; the entire vessel fits inside the frame with open water in the foreground and sky above."
+
+edited_image = pipe(
+    prompt=edit_prompt,
+    image=input_image,
+    width=2048,
+    height=2048,
+    use_kv_cache=True,
+    generator=torch.Generator("cpu").manual_seed(43),
+).images[0]
+
+edited_image.save("turbo_edit.png")
+```
+
+The editing example loads a yacht sketch and turns it into a photorealistic image. Both calls use the saved **8-step schedule** and the default CFG=1 setting. Setting `num_inference_steps` alone does not override Turbo's saved schedule. See the [Turbo model card](https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo) for more details.
+
+The following examples use the original **Qwen-Image-2.1** checkpoint.
+
 ### Text-to-Image
 
 ```python
@@ -56,8 +113,10 @@ pipe = QwenImage21Pipeline.from_pretrained(
     "Qwen/Qwen-Image-2.1", torch_dtype=torch.bfloat16
 ).to("cuda")
 
+prompt = "The image shows an open illustrated cookbook or recipe journal spread about sushi, rendered in a warm handmade watercolor style on cream, parchment-like paper with visible grain, soft beige aging, subtle stains, and faint ruled notebook lines. A narrow vertical fold divides the two pages at the center, with gentle shadows suggesting a physical open book. At the very top-left edge, a strip of torn blue washi-style tape with white wavy sea motifs overlaps the page border. Nearby, a small coral-orange fish sticker with dark outline, black dot eyes, fins, tail, and scales floats decoratively above the headline, surrounded by small blue outline bubbles and splash droplets. The left page is headed by the large handwritten title \"Sushi Roll\" in bold coral-red script, centered near the top and emphasized by a long wavy blue underline. A small orange starfish illustration with darker spots and black outline sits near the upper-right end of the title area, with additional blue bubbles scattered around the margins. Below the title, the ingredients are arranged like labeled illustrations in a loose grid. In the upper-left ingredient group, a wooden bowl filled with glossy white grains of sushi rice is drawn from a slightly elevated angle, with individual rice kernels shaded in pale cream and gray; its dark ink handwritten caption reads \"Sushi Rice\" and \"2 cups\". To its right, several overlapping rectangular dark green-black nori seaweed sheets with wrinkled matte texture are stacked diagonally; the label beneath reads \"Nori Sheets\" and \"4 sheets\". In the middle-left, a bright orange salmon fillet with white marbling lines lies horizontally on a pale shadow wash; the caption reads \"Fresh Salmon\" and \"200g\". In the middle-right, a whole cucumber with speckled dark-to-light green skin, small bumps, and a short stem stands upright; the label underneath reads \"Cucumber\" and \"1 whole\". In the lower-left-middle, a halved avocado with green flesh, darker peel, and a brown pit is shown front-facing; its caption reads \"Avocado\" and \"1 whole\". In the lower-right-middle, a shallow beige ceramic bowl holds tan sesame seeds in a granular mound; the text below reads \"Sesame Seeds\" and \"2 tbsp\". Along the bottom-left of the ingredients section, a small glass bottle of soy sauce with dark reddish-brown liquid, transparent reflections, and a cork stopper is tilted slightly; its caption reads \"Soy Sauce\" and \"50 ml\". Along the bottom-center/right, a metallic squeeze tube of wasabi is angled diagonally with beige-green paste emerging from the nozzle; the label reads \"Wasabi\" and \"1 tube\". Blue bubble outlines, small star doodles, and tiny blue brush marks decorate the blank spaces around these ingredients without forming any extra readable text. On the right page, the top-right corner has a torn strip of blue patterned washi tape with white wavy lines, placed partly over the page edge. Beneath it, the step-by-step recipe is laid out as a vertical flowchart made of rounded rectangular panels connected by small curved blue arrows pointing downward. Each panel has a thin hand-drawn colored outline, either muted blue or coral-pink, rounded corners, and a small numbered circular badge in blue outline at the left of the text area. The first panel near the top contains a small wooden bowl of rice being mixed with a pale wooden rice paddle; its blue circled number reads \"1\", the heading reads \"Step 1\" and \"Cook Seasoned Rice\", and the instruction text reads \"Mix rice vinegar,\" followed by \"sugar, and salt\" and \"into warm rice\". A dotted curved arrow leads downward to the second panel, which includes a pair of human hands with light peach skin tones placing a dark nori sheet onto a bamboo rolling mat; the hands are shown in close-up with slender fingers, neatly manicured pale nails, and a calm working posture. The second step’s blue circled number reads \"2\", the heading reads \"Step 2\" and \"Lay Nori on Mat\", and the instruction reads \"Place shiny side down\" and \"on the bamboo mat\". The third panel shows close-up hands spreading sticky white rice evenly across a dark nori surface on a bamboo mat, with the rice forming a rounded layer and leaving space near the far edge; its number reads \"3\", the heading reads \"Step 3\" and \"Step 3 Spread Rice Evenly\", and the instruction reads \"Leave a 1-inch border\" and \"at the top edge\". The fourth panel shows strips of filling arranged in parallel inside an open roll: orange salmon, green cucumber, and pale avocado sit on rice atop dark nori on the bamboo mat; the hands are partially visible at the sides adjusting the fillings. Its number reads \"4\", the heading reads \"Step 4\" and \"Place Fillings\", and the instruction reads \"Add salmon, cucumber,\" then \"and avocado strips\" and \"in the center\". The fifth panel depicts the rolled sushi being tightly formed with a bamboo mat wrapped around it while hands press gently from the sides; its number reads \"5\", the heading reads \"Step 5\" and \"Roll Tightly\", and the instruction reads \"Lift the mat and roll\" and \"forward, pressing gently\". The sixth panel shows a chef’s knife slicing cooked sushi rolls on a cutting board, with one completed outside-in roll showing orange salmon, cucumber, avocado, white rice, and dark seaweed layers; the adult hand holding the knife has light skin and trimmed nails, while the blade is long, silver-gray, and angled diagonally across the panel. Its number reads \"6\", the heading reads \"Step 6\" and \"Cut with Wet Knife\", and the instruction reads \"Wipe blade with a\" and \"wet cloth between cuts\". The seventh panel at the lower-right displays the finished plate of sushi rolls: several cut rolls topped with roe, sesame seeds, salmon, and garnishes sit on a pale dish, with folded pickled ginger slices and shredded green garnish nearby. Its number reads \"7\", the heading reads \"Step 7\" and \"Plate Beautifully\", and the instruction reads \"Arrange on a dish\" and \"with pickled ginger\". A small coral-orange fish sticker appears near the lower-left side of the right page, echoing the fish sticker on the left page. Near the bottom-right of the right page, a large red square seal-style stamp with rough ink texture contains the Japanese characters \"手作り\", reinforcing the handmade theme. Throughout both pages, the typography combines casual handwritten dark gray captions with coral-red calligraphic titles and headings, while the borders, arrows, bubbles, tape, starfish, and fish stickers use a coordinated palette of deep ocean blue, cream, wood brown, green, orange, and coral. The overall composition is a friendly instructional cooking diagram designed like a scrapbook page, balancing detailed food illustrations with decorative seaside-themed stationery elements."
+
 image = pipe(
-    prompt="A neon shop sign that reads \"QWEN IMAGE 2.1\", rainy night, reflections on wet pavement",
+    prompt=prompt,
     num_inference_steps=40,
     generator=torch.Generator("cuda").manual_seed(42),
 ).images[0]
@@ -69,20 +128,24 @@ image.save("t2i_example.png")
 
 ```python
 import torch
-from PIL import Image
+from diffusers.utils import load_image
 from diffusers import QwenImage21Pipeline
 
 pipe = QwenImage21Pipeline.from_pretrained(
     "Qwen/Qwen-Image-2.1", torch_dtype=torch.bfloat16
 ).to("cuda")
 
-input_image = Image.open("input.png")
+input_image = load_image(
+    'https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo/resolve/main/assets/turbo-boat-input.png'
+).convert("RGBA")
+
+edit_prompt = "Create a photorealistic photograph of the motor yacht from the input sketch, sailing on open sea, captured in full side profile with the camera at water level. Build the vessel with the structure shown in the input sketch: a long low hull; one tall mast stepped forward with a small cross-tree platform near its top; a wheelhouse superstructure with an open bridge wing just behind the mast; a midships deckhouse carrying a row of four rectangular windows with a lifeboat stowed on its roof; a rectangular funnel behind that deckhouse; an aft deckhouse with a row of three rectangular windows and a second lifeboat above it; thin railings along every deck edge; the hull side pierced by one small square window at the bow, an upper line of five round portholes on the raised forward section, and a lower line of nine round portholes along the main hull. Paint the hull black, the superstructures and the mast white, and the funnel yellow. Set the yacht broadside on a calm deep-blue sea with a low gentle swell and a thin white wake trailing from the bow, the straight horizon crossing behind the funnel top, under a clear sky with soft scattered clouds; sunlight from the front left lights the white superstructures and leaves a bright reflection path on the water beside the hull with a soft contact shadow along the waterline; the entire vessel fits inside the frame with open water in the foreground and sky above."
 
 image = pipe(
-    prompt="Change the background to a sunset beach",
+    prompt=edit_prompt,
     image=input_image,
     num_inference_steps=40,
-    generator=torch.Generator("cuda").manual_seed(42),
+    generator=torch.Generator("cuda").manual_seed(43),
 ).images[0]
 
 image.save("edit_example.png")
@@ -107,7 +170,7 @@ result = pipe(
     prompt="These three characters are sitting around a campfire in a forest",
     image=images,
     num_inference_steps=40,
-    generator=torch.Generator("cuda").manual_seed(42),
+    generator=torch.Generator("cuda").manual_seed(43),
 ).images[0]
 
 result.save("multi_ref_example.png")
@@ -162,6 +225,8 @@ image = pipe(
 ```
 
 ### Default Parameters
+
+These defaults apply to the original Qwen-Image-2.1 checkpoint. Turbo uses its saved 8-step schedule; both checkpoints default to the 2048 resolution level.
 
 | Parameter | Default | Notes |
 |---|---|---|
@@ -316,7 +381,7 @@ python examples/offline_inference/text_to_image/text_to_image.py \
 python examples/offline_inference/image_to_image/image_edit.py \
   --model Qwen/Qwen-Image-2.1 \
   --color-format RGBA \
-  --seed 42 \
+  --seed 43 \
   --image input.png \
   --prompt "Let this mascot dance under the moon" \
   --output qwen21_edit.png \
