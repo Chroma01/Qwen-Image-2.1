@@ -28,7 +28,7 @@ Four key improvements define this release:
 ## News
 
 - 2026.10.09: We released **[Qwen-Image-2.1-Turbo](https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo)** for image generation and editing in just **8 denoising steps**. Get started with the [Turbo example](#qwen-image-21-turbo-8-step-generation-and-editing) below.
-- 2026.10.09: **Qwen-Image-2.1 Pro and Turbo APIs are now officially live!** Explore the [Pro API](https://modelstudio.console.alibabacloud.com/ap-southeast-1/model/market/detail/qwen-image-2.1-pro?serviceSite=international&ref=list) on Alibaba Cloud Model Studio.
+- 2026.10.09: **Qwen-Image-2.1 Pro and Turbo APIs are now officially live!** Explore the [Pro API](https://modelstudio.console.alibabacloud.com/ap-southeast-1/model/market/detail/qwen-image-2.1-pro?serviceSite=international&ref=list) and [Turbo API](https://modelstudio.console.alibabacloud.com/ap-southeast-1/model/market/detail/qwen-image-2.1-turbo?serviceSite=international&ref=list) on Alibaba Cloud Model Studio.
 - 2026.09.20: We released Qwen-Image-2.1! Check our [Blog](https://qwen.ai/blog?id=qwen-image-2.1) for more details. Weights available at [HuggingFace](https://huggingface.co/Qwen/Qwen-Image-2.1) and [ModelScope](https://modelscope.cn/models/Qwen/Qwen-Image-2.1).
 - 2026.09.20: [Diffusers](https://github.com/huggingface/diffusers) supports Qwen-Image-2.1 from Day 0 via `QwenImage21Pipeline`. See [PR #14804](https://github.com/huggingface/diffusers/pull/14804).
 - 2026.09.20: [ComfyUI](https://github.com/Comfy-Org/ComfyUI) natively supports Qwen-Image-2.1 from Day 0. Compatible weights at [Comfy-Org/Qwen-Image-2.1](https://huggingface.co/Comfy-Org/Qwen-Image-2.1), with example workflows for [text-to-image](https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_qwen_image_2_1_t2i.json) and [image editing](https://github.com/Comfy-Org/workflow_templates/blob/main/templates/image_qwen_image_2_1_image_edit.json).
@@ -40,7 +40,7 @@ Four key improvements define this release:
 
 **Qwen-Image-2.1 Pro and Turbo APIs are officially available** for image generation and editing in your applications. Use the hosted APIs, or run the [Turbo checkpoint](https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo) in your own environment with Diffusers.
 
-Visit the [Qwen-Image-2.1 Pro API page](https://modelstudio.console.alibabacloud.com/ap-southeast-1/model/market/detail/qwen-image-2.1-pro?serviceSite=international&ref=list) for access and usage details.
+Visit the [Qwen-Image-2.1 Pro API page](https://modelstudio.console.alibabacloud.com/ap-southeast-1/model/market/detail/qwen-image-2.1-pro?serviceSite=international&ref=list) or [Qwen-Image-2.1 Turbo API page](https://modelstudio.console.alibabacloud.com/ap-southeast-1/model/market/detail/qwen-image-2.1-turbo?serviceSite=international&ref=list) for access and usage details.
 
 ## Quick Start
 
