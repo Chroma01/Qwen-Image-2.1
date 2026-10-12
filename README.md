@@ -73,8 +73,8 @@ prompt = "A vertically oriented educational chemistry study poster fills the fra
 
 image = pipe(
     prompt=prompt,
-    width=1680,
-    height=2512,
+    width=1696,
+    height=2528,
     use_kv_cache=True,
     generator=torch.Generator("cpu").manual_seed(42),
 ).images[0]
@@ -117,8 +117,8 @@ prompt = "A vertically oriented educational chemistry study poster fills the fra
 
 image = pipe(
     prompt=prompt,
-    width=1680,
-    height=2512,
+    width=1696,
+    height=2528,
     num_inference_steps=40,
     generator=torch.Generator("cuda").manual_seed(42),
 ).images[0]
